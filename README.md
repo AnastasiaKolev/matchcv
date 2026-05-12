@@ -14,16 +14,16 @@ MVP для сессионного проекта. Система помогае�
 matchcv/
 ├── backend/
 │   ├── main.py              # FastAPI-приложение
-│   ├── matcher.py           # логика матчинга (in-memory)
+│   ├── matcher.py           # логика матчинга
 │   ├── data_generator.py    # генератор синтетических резюме и вакансий
-│   ├── embedding_service.py # эмбеддинги (MiniLM)
+│   ├── embedding_service.py # эмбеддинги
 │   ├── evaluate.py          # расчёт метрик
 │   └── templates/
 │       └── index.html       # веб-интерфейс
 ├── data/
 │   ├── resumes.json         # сгенерированные резюме
 │   └── vacancies.json       # сгенерированные вакансии
-├── docker-compose.yml       # (опционально) контейнер OpenSearch
+├── docker-compose.yml       # контейнер OpenSearch
 ├── Dockerfile
 ├── requirements.txt
 └── README.md
