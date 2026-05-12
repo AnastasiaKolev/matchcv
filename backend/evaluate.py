@@ -11,9 +11,9 @@ OPENSEARCH_HOST = os.getenv("OPENSEARCH_HOST", "localhost")
 INDEX = "resumes"
 
 async def evaluate():
-    with open("data/vacancies.json", "r") as f:
+    with open("../data/vacancies.json", "r") as f:
         vacancies = json.load(f)
-    with open("data/resumes.json", "r") as f:
+    with open("../data/resumes.json", "r") as f:
         resumes = json.load(f)
 
     client = OpenSearch(f"http://{OPENSEARCH_HOST}:9200")
@@ -29,7 +29,7 @@ async def evaluate():
             if set(vac["required_skills"]).issubset(set(r["skills"])) and r["experience_years"] >= vac["min_experience"]:
                 relevant_ids.add(r["id"])
 
-        candidates = await match_candidates(vac, top_k=20, skip_comments=True)
+        candidates = await match_candidates(vac, top_k=20)
         candidate_ids = [c["id"] for c in candidates]
         y_true = [3 if cid in relevant_ids else 0 for cid in candidate_ids]
         y_score = [c["score"] for c in candidates]
