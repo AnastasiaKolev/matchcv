@@ -1,85 +1,60 @@
-import numpy as np
+import os, json, numpy as np
 from typing import List, Dict
 from embedding_service import EmbeddingService
-from opensearchpy import OpenSearch
 
-OPENSEARCH_HOST = "opensearch"
-INDEX_NAME = "resumes"
-
+DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 embed_service = EmbeddingService()
 
+class InMemoryMatcher:
+    def __init__(self):
+        with open(os.path.join(DATA_DIR, "resumes.json"), "r", encoding="utf-8") as f:
+            self.resumes = json.load(f)
+        self.texts = [r["text"] for r in self.resumes]
+        self.embeddings = embed_service.encode(self.texts)
+        self.skills_list = [r["skills"] for r in self.resumes]
+        self.exp_list = [r["experience_years"] for r in self.resumes]
 
-def normalize_score(scores):
-    min_s, max_s = min(scores), max(scores)
-    return [(s - min_s) / (max_s - min_s + 1e-6) for s in scores]
+    def search(self, vac_embedding, vac, top_k=10):
+        # косинусное сходство (векторы уже нормализованы)
+        sims = np.dot(self.embeddings, vac_embedding)
+        order = np.argsort(sims)[::-1][:top_k*2]  # берём побольше для реранкинга
+        candidates = []
+        for idx in order:
+            r = self.resumes[idx]
+            skills_match = len(set(r["skills"]) & set(vac["required_skills"])) / max(len(vac["required_skills"]), 1)
+            opt_match = len(set(r["skills"]) & set(vac["optional_skills"])) / max(len(vac["optional_skills"]), 1)
+            exp_diff = abs(r["experience_years"] - vac["min_experience"])
+            exp_score = 1.0 if r["experience_years"] >= vac["min_experience"] else max(0, 1 - exp_diff/5)
+            if r["experience_years"] > vac["min_experience"] + 3:
+                exp_score *= 0.9
+            final = sims[idx]*0.4 + skills_match*0.4 + opt_match*0.1 + exp_score*0.1
+            candidates.append({
+                "id": r["id"],
+                "resume_id": r["id"],
+                "text": r["text"],
+                "skills": r["skills"],
+                "experience_years": r["experience_years"],
+                "score": final,
+                "vec_sim": float(sims[idx]),
+                "skills_match": skills_match,
+                "exp_score": exp_score
+            })
+        candidates.sort(key=lambda x: x["score"], reverse=True)
+        top = candidates[:top_k]
+        for c in top:
+            strengths = []; risks = []
+            if c["skills_match"] >= 0.8: strengths.append("Полный набор обязательных навыков")
+            if c["exp_score"] >= 0.9: strengths.append("Достаточный опыт")
+            if c["skills_match"] < 0.5: risks.append("Не хватает ключевых навыков")
+            if c["exp_score"] < 0.8: risks.append("Опыт ниже требуемого")
+            c["comment"] = {
+                "strengths": "; ".join(strengths) or "Нет явных преимуществ",
+                "risks": "; ".join(risks) or "Риски отсутствуют"
+            }
+        return top
 
+matcher = InMemoryMatcher()
 
 async def match_candidates(vacancy: dict, top_k: int = 10) -> List[Dict]:
-    client = OpenSearch(f"http://{OPENSEARCH_HOST}:9200")
-    vac_embedding = embed_service.encode([vacancy["text"]])[0].tolist()
-
-    query = {
-        "size": 100,
-        "query": {
-            "script_score": {
-                "query": {
-                    "match": {"text": vacancy["text"]}
-                },
-                "script": {
-                    "source": "cosineSimilarity(params.query_vector, 'embedding') + 1.0 + _score * 0.3",
-                    "params": {"query_vector": vac_embedding}
-                }
-            }
-        }
-    }
-    response = client.search(index=INDEX_NAME, body=query)
-    candidates = []
-    for hit in response["hits"]["hits"]:
-        src = hit["_source"]
-        vec_sim = hit["_score"]  # уже суммарный
-        skills_match = len(set(src["skills"]) & set(vacancy["required_skills"])) / max(
-            len(vacancy["required_skills"]), 1
-        )
-        opt_match = len(set(src["skills"]) & set(vacancy["optional_skills"])) / max(
-            len(vacancy["optional_skills"]), 1
-        )
-        exp_diff = abs(src["experience_years"] - vacancy["min_experience"])
-        exp_score = 1.0 if src["experience_years"] >= vacancy["min_experience"] else max(0, 1 - exp_diff / 5)
-
-        if src["experience_years"] > vacancy["min_experience"] + 3:
-            exp_score *= 0.9
-
-        final = vec_sim * 0.4 + skills_match * 0.4 + opt_match * 0.1 + exp_score * 0.1
-        candidates.append({
-            "id": src["id"],
-            "resume_id": src["id"],
-            "text": src["text"],
-            "skills": src["skills"],
-            "experience_years": src["experience_years"],
-            "score": final,
-            "vec_sim": vec_sim,
-            "skills_match": skills_match,
-            "exp_score": exp_score
-        })
-
-    candidates.sort(key=lambda x: x["score"], reverse=True)
-    top = candidates[:top_k]
-
-    # Вместо LLM формируем шаблонный комментарий
-    for c in top:
-        strengths = []
-        if c["skills_match"] >= 0.8:
-            strengths.append("Полный набор обязательных навыков")
-        if c["exp_score"] >= 0.9:
-            strengths.append("Достаточный опыт")
-        risks = []
-        if c["skills_match"] < 0.5:
-            risks.append("Не хватает ключевых навыков")
-        if c["exp_score"] < 0.8:
-            risks.append("Опыт ниже требуемого")
-        c["comment"] = {
-            "strengths": "; ".join(strengths) or "Нет явных преимуществ",
-            "risks": "; ".join(risks) or "Риски отсутствуют"
-        }
-
-    return top
+    vac_emb = embed_service.encode([vacancy["text"]])[0]
+    return matcher.search(vac_emb, vacancy, top_k)
