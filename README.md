@@ -50,7 +50,7 @@ python -m uvicorn main:app --host 0.0.0.0 --port 8080
 ```
 Сервис доступен по `http://localhost:8080`. Выберите вакансию и нажмите «Искать».
 
-### 3. Оценка метрик (опционально)
+### 3. Оценка метрик
 ```bash
 cd backend
 python evaluate.py
