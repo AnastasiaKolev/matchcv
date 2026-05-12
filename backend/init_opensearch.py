@@ -14,7 +14,7 @@ mapping = {
             "text": {"type": "text", "analyzer": "russian"},
             "embedding": {
                 "type": "knn_vector",
-                "dimension": 1024,
+                "dimension": 384,
                 "method": {
                     "name": "hnsw",
                     "space_type": "cosinesimil"
