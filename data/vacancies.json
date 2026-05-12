@@ -1,0 +1,350 @@
+[
+  {
+    "id": "0",
+    "title": "Product Manager",
+    "text": "Вакансия: Product Manager\nТребуемый опыт: от 5 лет\nОбязательные навыки: Kubernetes, AWS, Deep Learning, Docker, Scrum\nЖелательные навыки: Machine Learning, GCP\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Kubernetes",
+      "AWS",
+      "Deep Learning",
+      "Docker",
+      "Scrum"
+    ],
+    "optional_skills": [
+      "Machine Learning",
+      "GCP"
+    ],
+    "min_experience": 5
+  },
+  {
+    "id": "1",
+    "title": "Python Backend Developer",
+    "text": "Вакансия: Python Backend Developer\nТребуемый опыт: от 4 лет\nОбязательные навыки: Deep Learning, GCP, Hadoop, AWS, Tableau\nЖелательные навыки: CI/CD, Machine Learning, Scrum\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Deep Learning",
+      "GCP",
+      "Hadoop",
+      "AWS",
+      "Tableau"
+    ],
+    "optional_skills": [
+      "CI/CD",
+      "Machine Learning",
+      "Scrum"
+    ],
+    "min_experience": 4
+  },
+  {
+    "id": "2",
+    "title": "Python Backend Developer",
+    "text": "Вакансия: Python Backend Developer\nТребуемый опыт: от 1 лет\nОбязательные навыки: Kubernetes, SQL, Spark, AWS\nЖелательные навыки: TensorFlow, Scrum, PyTorch\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Kubernetes",
+      "SQL",
+      "Spark",
+      "AWS"
+    ],
+    "optional_skills": [
+      "TensorFlow",
+      "Scrum",
+      "PyTorch"
+    ],
+    "min_experience": 1
+  },
+  {
+    "id": "3",
+    "title": "Data Scientist",
+    "text": "Вакансия: Data Scientist\nТребуемый опыт: от 1 лет\nОбязательные навыки: Agile, Scrum, PyTorch, Linux, TensorFlow, Python\nЖелательные навыки: Docker, Tableau, Kubernetes\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Agile",
+      "Scrum",
+      "PyTorch",
+      "Linux",
+      "TensorFlow",
+      "Python"
+    ],
+    "optional_skills": [
+      "Docker",
+      "Tableau",
+      "Kubernetes"
+    ],
+    "min_experience": 1
+  },
+  {
+    "id": "4",
+    "title": "Data Scientist",
+    "text": "Вакансия: Data Scientist\nТребуемый опыт: от 1 лет\nОбязательные навыки: Docker, Machine Learning, Deep Learning, PyTorch, Agile\nЖелательные навыки: SQL, Data Engineering, CI/CD\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Docker",
+      "Machine Learning",
+      "Deep Learning",
+      "PyTorch",
+      "Agile"
+    ],
+    "optional_skills": [
+      "SQL",
+      "Data Engineering",
+      "CI/CD"
+    ],
+    "min_experience": 1
+  },
+  {
+    "id": "5",
+    "title": "Product Manager",
+    "text": "Вакансия: Product Manager\nТребуемый опыт: от 3 лет\nОбязательные навыки: PyTorch, SQL, Docker, AWS, Spark\nЖелательные навыки: CI/CD\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "PyTorch",
+      "SQL",
+      "Docker",
+      "AWS",
+      "Spark"
+    ],
+    "optional_skills": [
+      "CI/CD"
+    ],
+    "min_experience": 3
+  },
+  {
+    "id": "6",
+    "title": "DevOps",
+    "text": "Вакансия: DevOps\nТребуемый опыт: от 3 лет\nОбязательные навыки: Scrum, CI/CD, Tableau, GCP\nЖелательные навыки: Linux, Hadoop, Machine Learning\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Scrum",
+      "CI/CD",
+      "Tableau",
+      "GCP"
+    ],
+    "optional_skills": [
+      "Linux",
+      "Hadoop",
+      "Machine Learning"
+    ],
+    "min_experience": 3
+  },
+  {
+    "id": "7",
+    "title": "DevOps",
+    "text": "Вакансия: DevOps\nТребуемый опыт: от 3 лет\nОбязательные навыки: AWS, Git, SQL, Python, GCP, Agile\nЖелательные навыки: Hadoop, Spark\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "AWS",
+      "Git",
+      "SQL",
+      "Python",
+      "GCP",
+      "Agile"
+    ],
+    "optional_skills": [
+      "Hadoop",
+      "Spark"
+    ],
+    "min_experience": 3
+  },
+  {
+    "id": "8",
+    "title": "Python Backend Developer",
+    "text": "Вакансия: Python Backend Developer\nТребуемый опыт: от 3 лет\nОбязательные навыки: SQL, Tableau, Docker, Kubernetes, Spark\nЖелательные навыки: CI/CD, Git, Scrum\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "SQL",
+      "Tableau",
+      "Docker",
+      "Kubernetes",
+      "Spark"
+    ],
+    "optional_skills": [
+      "CI/CD",
+      "Git",
+      "Scrum"
+    ],
+    "min_experience": 3
+  },
+  {
+    "id": "9",
+    "title": "Product Manager",
+    "text": "Вакансия: Product Manager\nТребуемый опыт: от 2 лет\nОбязательные навыки: Hadoop, AWS, SQL, TensorFlow\nЖелательные навыки: Airflow, Data Engineering, Linux\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Hadoop",
+      "AWS",
+      "SQL",
+      "TensorFlow"
+    ],
+    "optional_skills": [
+      "Airflow",
+      "Data Engineering",
+      "Linux"
+    ],
+    "min_experience": 2
+  },
+  {
+    "id": "10",
+    "title": "DevOps",
+    "text": "Вакансия: DevOps\nТребуемый опыт: от 4 лет\nОбязательные навыки: PyTorch, SQL, Scrum, Machine Learning, Deep Learning\nЖелательные навыки: Git\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "PyTorch",
+      "SQL",
+      "Scrum",
+      "Machine Learning",
+      "Deep Learning"
+    ],
+    "optional_skills": [
+      "Git"
+    ],
+    "min_experience": 4
+  },
+  {
+    "id": "11",
+    "title": "Python Backend Developer",
+    "text": "Вакансия: Python Backend Developer\nТребуемый опыт: от 5 лет\nОбязательные навыки: Agile, Docker, Deep Learning, AWS, Spark, TensorFlow\nЖелательные навыки: Tableau, Machine Learning, PyTorch\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Agile",
+      "Docker",
+      "Deep Learning",
+      "AWS",
+      "Spark",
+      "TensorFlow"
+    ],
+    "optional_skills": [
+      "Tableau",
+      "Machine Learning",
+      "PyTorch"
+    ],
+    "min_experience": 5
+  },
+  {
+    "id": "12",
+    "title": "Data Scientist",
+    "text": "Вакансия: Data Scientist\nТребуемый опыт: от 1 лет\nОбязательные навыки: Scrum, Hadoop, PyTorch, Git, Docker, GCP\nЖелательные навыки: Deep Learning, Python, Data Engineering\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Scrum",
+      "Hadoop",
+      "PyTorch",
+      "Git",
+      "Docker",
+      "GCP"
+    ],
+    "optional_skills": [
+      "Deep Learning",
+      "Python",
+      "Data Engineering"
+    ],
+    "min_experience": 1
+  },
+  {
+    "id": "13",
+    "title": "Python Backend Developer",
+    "text": "Вакансия: Python Backend Developer\nТребуемый опыт: от 1 лет\nОбязательные навыки: SQL, Docker, Linux, Hadoop, Kubernetes\nЖелательные навыки: PyTorch, GCP, TensorFlow\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "SQL",
+      "Docker",
+      "Linux",
+      "Hadoop",
+      "Kubernetes"
+    ],
+    "optional_skills": [
+      "PyTorch",
+      "GCP",
+      "TensorFlow"
+    ],
+    "min_experience": 1
+  },
+  {
+    "id": "14",
+    "title": "Python Backend Developer",
+    "text": "Вакансия: Python Backend Developer\nТребуемый опыт: от 3 лет\nОбязательные навыки: Docker, Python, Spark, Hadoop, TensorFlow\nЖелательные навыки: PyTorch\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Docker",
+      "Python",
+      "Spark",
+      "Hadoop",
+      "TensorFlow"
+    ],
+    "optional_skills": [
+      "PyTorch"
+    ],
+    "min_experience": 3
+  },
+  {
+    "id": "15",
+    "title": "DevOps",
+    "text": "Вакансия: DevOps\nТребуемый опыт: от 4 лет\nОбязательные навыки: Git, Machine Learning, PyTorch, TensorFlow, Airflow\nЖелательные навыки: Docker\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Git",
+      "Machine Learning",
+      "PyTorch",
+      "TensorFlow",
+      "Airflow"
+    ],
+    "optional_skills": [
+      "Docker"
+    ],
+    "min_experience": 4
+  },
+  {
+    "id": "16",
+    "title": "Data Scientist",
+    "text": "Вакансия: Data Scientist\nТребуемый опыт: от 5 лет\nОбязательные навыки: Kubernetes, TensorFlow, Python, GCP\nЖелательные навыки: Spark, Machine Learning, Airflow\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Kubernetes",
+      "TensorFlow",
+      "Python",
+      "GCP"
+    ],
+    "optional_skills": [
+      "Spark",
+      "Machine Learning",
+      "Airflow"
+    ],
+    "min_experience": 5
+  },
+  {
+    "id": "17",
+    "title": "DevOps",
+    "text": "Вакансия: DevOps\nТребуемый опыт: от 2 лет\nОбязательные навыки: Kubernetes, PyTorch, CI/CD, TensorFlow, AWS\nЖелательные навыки: Scrum, Deep Learning\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Kubernetes",
+      "PyTorch",
+      "CI/CD",
+      "TensorFlow",
+      "AWS"
+    ],
+    "optional_skills": [
+      "Scrum",
+      "Deep Learning"
+    ],
+    "min_experience": 2
+  },
+  {
+    "id": "18",
+    "title": "DevOps",
+    "text": "Вакансия: DevOps\nТребуемый опыт: от 2 лет\nОбязательные навыки: Deep Learning, AWS, Python, PyTorch, Linux\nЖелательные навыки: Tableau, TensorFlow, Data Engineering\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "Deep Learning",
+      "AWS",
+      "Python",
+      "PyTorch",
+      "Linux"
+    ],
+    "optional_skills": [
+      "Tableau",
+      "TensorFlow",
+      "Data Engineering"
+    ],
+    "min_experience": 2
+  },
+  {
+    "id": "19",
+    "title": "Data Scientist",
+    "text": "Вакансия: Data Scientist\nТребуемый опыт: от 3 лет\nОбязательные навыки: PyTorch, Airflow, Deep Learning, Agile\nЖелательные навыки: TensorFlow, Kubernetes, Python\nОбязанности: Разработка, тестирование, поддержка.\nУсловия: офис, соцпакет.",
+    "required_skills": [
+      "PyTorch",
+      "Airflow",
+      "Deep Learning",
+      "Agile"
+    ],
+    "optional_skills": [
+      "TensorFlow",
+      "Kubernetes",
+      "Python"
+    ],
+    "min_experience": 3
+  }
+]
