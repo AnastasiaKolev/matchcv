@@ -15,9 +15,8 @@ class InMemoryMatcher:
         self.exp_list = [r["experience_years"] for r in self.resumes]
 
     def search(self, vac_embedding, vac, top_k=10):
-        # косинусное сходство (векторы уже нормализованы)
         sims = np.dot(self.embeddings, vac_embedding)
-        order = np.argsort(sims)[::-1][:top_k*2]  # берём побольше для реранкинга
+        order = np.argsort(sims)[::-1][:top_k*2]
         candidates = []
         for idx in order:
             r = self.resumes[idx]
