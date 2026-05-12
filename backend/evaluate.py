@@ -1,63 +1,63 @@
-import asyncio
 import json
-import sys
-import os
 import numpy as np
-from sklearn.metrics import ndcg_score
 from matcher import match_candidates
-from opensearchpy import OpenSearch
+import os
 
 OPENSEARCH_HOST = os.getenv("OPENSEARCH_HOST", "localhost")
-INDEX = "resumes"
 
-async def evaluate():
-    with open("../data/vacancies.json", "r") as f:
-        vacancies = json.load(f)
-    with open("../data/resumes.json", "r") as f:
-        resumes = json.load(f)
+def dcg_at_k(r, k):
+    r = np.asfarray(r)[:k]
+    if r.size:
+        return np.sum(r / np.log2(np.arange(2, r.size + 2)))
+    return 0.0
 
-    client = OpenSearch(f"http://{OPENSEARCH_HOST}:9200")
+def ndcg_at_k(y_true, y_score, k):
+    order = np.argsort(y_score)[::-1]
+    y_true_sorted = y_true[order]
+    dcg = dcg_at_k(y_true_sorted, k)
+    ideal = dcg_at_k(sorted(y_true, reverse=True), k)
+    return dcg / ideal if ideal else 0.0
 
-    ndcg_scores = []
-    precision_scores = []
-    recall_scores = []
-    mrr_scores = []
+with open("../data/vacancies.json", "r") as f:
+    vacancies = json.load(f)
+with open("../data/resumes.json", "r") as f:
+    resumes = json.load(f)
 
-    for vac in vacancies:
-        relevant_ids = set()
-        for r in resumes:
-            if set(vac["required_skills"]).issubset(set(r["skills"])) and r["experience_years"] >= vac["min_experience"]:
-                relevant_ids.add(r["id"])
+ndcg_list = []
+prec_list = []
+rec_list = []
+mrr_list = []
 
-        candidates = await match_candidates(vac, top_k=20)
-        candidate_ids = [c["id"] for c in candidates]
-        y_true = [3 if cid in relevant_ids else 0 for cid in candidate_ids]
-        y_score = [c["score"] for c in candidates]
+for vac in vacancies:
+    relevant_ids = set()
+    for r in resumes:
+        if set(vac["required_skills"]).issubset(set(r["skills"])) and r["experience_years"] >= vac["min_experience"]:
+            relevant_ids.add(r["id"])
 
-        if len(y_true) >= 10:
-            ndcg = ndcg_score([y_true[:10]], [y_score[:10]])
-        else:
-            ndcg = ndcg_score([y_true], [y_score])
-        ndcg_scores.append(ndcg)
+    # вызываем как обычную функцию (не async)
+    candidates = match_candidates(vac, top_k=20)
+    cand_ids = [c["id"] for c in candidates]
+    y_true = np.array([1 if cid in relevant_ids else 0 for cid in cand_ids])
+    y_score = np.array([c["score"] for c in candidates])
 
-        top10 = candidate_ids[:10]
-        tp = len(set(top10) & relevant_ids)
-        precision = tp / 10
-        recall = tp / len(relevant_ids) if relevant_ids else 0
-        precision_scores.append(precision)
-        recall_scores.append(recall)
+    ndcg = ndcg_at_k(y_true, y_score, 10)
+    ndcg_list.append(ndcg)
 
-        for rank, cid in enumerate(candidate_ids, 1):
-            if cid in relevant_ids:
-                mrr_scores.append(1.0 / rank)
-                break
-        else:
-            mrr_scores.append(0.0)
+    top10 = cand_ids[:10]
+    tp = len(set(top10) & relevant_ids)
+    prec = tp / 10
+    rec = tp / len(relevant_ids) if relevant_ids else 0
+    prec_list.append(prec)
+    rec_list.append(rec)
 
-    print(f"NDCG@10: {np.mean(ndcg_scores):.3f}")
-    print(f"Precision@10: {np.mean(precision_scores):.3f}")
-    print(f"Recall@10: {np.mean(recall_scores):.3f}")
-    print(f"MRR: {np.mean(mrr_scores):.3f}")
+    for rank, cid in enumerate(cand_ids, 1):
+        if cid in relevant_ids:
+            mrr_list.append(1.0 / rank)
+            break
+    else:
+        mrr_list.append(0.0)
 
-if __name__ == "__main__":
-    asyncio.run(evaluate())
+print(f"NDCG@10: {np.mean(ndcg_list):.3f}")
+print(f"Precision@10: {np.mean(prec_list):.3f}")
+print(f"Recall@10: {np.mean(rec_list):.3f}")
+print(f"MRR: {np.mean(mrr_list):.3f}")
