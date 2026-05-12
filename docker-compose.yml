@@ -18,6 +18,7 @@ services:
     environment:
       - discovery.type=single-node
       - plugins.security.disabled=true
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=MatchCV2024!
     ports:
       - "9200:9200"
     volumes:
