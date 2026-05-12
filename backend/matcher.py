@@ -5,6 +5,7 @@ from embedding_service import EmbeddingService
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 embed_service = EmbeddingService()
 
+
 class InMemoryMatcher:
     def __init__(self):
         with open(os.path.join(DATA_DIR, "resumes.json"), "r", encoding="utf-8") as f:
