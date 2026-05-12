@@ -2,8 +2,6 @@ import numpy as np
 from typing import List, Dict
 from embedding_service import EmbeddingService
 from opensearchpy import OpenSearch
-import asyncio
-from vllm_client import generate_comment
 
 OPENSEARCH_HOST = "opensearch"
 INDEX_NAME = "resumes"
@@ -39,9 +37,12 @@ async def match_candidates(vacancy: dict, top_k: int = 10) -> List[Dict]:
     for hit in response["hits"]["hits"]:
         src = hit["_source"]
         vec_sim = hit["_score"]  # уже суммарный
-        skills_match = len(set(src["skills"]) & set(vacancy["required_skills"])) / max(len(vacancy["required_skills"]),
-                                                                                       1)
-        opt_match = len(set(src["skills"]) & set(vacancy["optional_skills"])) / max(len(vacancy["optional_skills"]), 1)
+        skills_match = len(set(src["skills"]) & set(vacancy["required_skills"])) / max(
+            len(vacancy["required_skills"]), 1
+        )
+        opt_match = len(set(src["skills"]) & set(vacancy["optional_skills"])) / max(
+            len(vacancy["optional_skills"]), 1
+        )
         exp_diff = abs(src["experience_years"] - vacancy["min_experience"])
         exp_score = 1.0 if src["experience_years"] >= vacancy["min_experience"] else max(0, 1 - exp_diff / 5)
 
@@ -64,8 +65,21 @@ async def match_candidates(vacancy: dict, top_k: int = 10) -> List[Dict]:
     candidates.sort(key=lambda x: x["score"], reverse=True)
     top = candidates[:top_k]
 
-    comments = await asyncio.gather(*[generate_comment(vacancy["text"], c["text"]) for c in top])
-    for c, comm in zip(top, comments):
-        c["comment"] = comm
+    # Вместо LLM формируем шаблонный комментарий
+    for c in top:
+        strengths = []
+        if c["skills_match"] >= 0.8:
+            strengths.append("Полный набор обязательных навыков")
+        if c["exp_score"] >= 0.9:
+            strengths.append("Достаточный опыт")
+        risks = []
+        if c["skills_match"] < 0.5:
+            risks.append("Не хватает ключевых навыков")
+        if c["exp_score"] < 0.8:
+            risks.append("Опыт ниже требуемого")
+        c["comment"] = {
+            "strengths": "; ".join(strengths) or "Нет явных преимуществ",
+            "risks": "; ".join(risks) or "Риски отсутствуют"
+        }
 
     return top

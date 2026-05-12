@@ -1,13 +1,16 @@
 from sentence_transformers import SentenceTransformer
-import torch
 import numpy as np
 
 
 class EmbeddingService:
-    def __init__(self, model_name: str = "intfloat/multilingual-e5-large"):
-        self.model = SentenceTransformer(model_name, device="cuda" if torch.cuda.is_available() else "cpu")
+    def __init__(self):
+        # Лёгкая модель (420 МБ), работает на CPU
+        self.model = SentenceTransformer(
+            "paraphrase-multilingual-MiniLM-L12-v2",
+            device="cpu"
+        )
 
     def encode(self, texts: list[str]) -> np.ndarray:
-        texts = [f"query: {t}" if len(t) < 500 else f"passage: {t}" for t in texts]
+        # MiniLM не нужны префиксы query/passage
         embeddings = self.model.encode(texts, normalize_embeddings=True)
         return embeddings
