@@ -9,7 +9,7 @@ import uvicorn
 app = FastAPI(title="MatchCV")
 
 
-with open("data/vacancies.json", "r", encoding="utf-8") as f:
+with open("../data/vacancies.json", "r", encoding="utf-8") as f:
     vacancies = json.load(f)
 
 @app.get("/", response_class=HTMLResponse)

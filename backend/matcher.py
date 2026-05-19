@@ -1,6 +1,6 @@
 import os, json, numpy as np
 from typing import List, Dict
-from embedding_service import EmbeddingService
+from backend.embedding_service import EmbeddingService
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 embed_service = EmbeddingService()
